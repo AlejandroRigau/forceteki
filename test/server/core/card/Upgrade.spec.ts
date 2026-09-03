@@ -120,6 +120,27 @@ describe('Upgrade cards', function() {
             });
         });
 
+        describe('When a token upgrade is attached to a leader in the test setup', function() {
+            it('the token should be attached to the deployed leader instead of being treated as a deck card', async function () {
+                await contextRef.setupTestAsync({
+                    phase: 'action',
+                    player1: {
+                        leader: { card: 'darth-vader#dark-lord-of-the-sith', deployed: true, upgrades: ['experience', 'weakness'] },
+                        groundArena: [{ card: 'battlefield-marine', upgrades: ['shield'] }]
+                    },
+                    player2: {
+                        groundArena: [{ card: 'atat-suppressor', upgrades: ['weakness'] }]
+                    }
+                });
+
+                const { context } = contextRef;
+
+                expect(context.darthVader).toHaveExactUpgradeNames(['experience', 'weakness']);
+                expect(context.battlefieldMarine).toHaveExactUpgradeNames(['shield']);
+                expect(context.atatSuppressor).toHaveExactUpgradeNames(['weakness']);
+            });
+        });
+
         describe('When an upgrade is attached,', function() {
             beforeEach(function () {
                 return contextRef.setupTestAsync({

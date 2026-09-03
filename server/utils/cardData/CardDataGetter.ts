@@ -136,7 +136,7 @@ export abstract class CardDataGetter {
 
     protected getInternalNameFromSetCode(setCode: string) {
         const id = this.setCodeMap.get(setCode);
-        Contract.assertNotNullLike(setCode, `Card ${setCode} not found in card map`);
+        Contract.assertNotNullLike(id, `Card ${setCode} not found in card map`);
 
         return this.getInternalName(id);
     }

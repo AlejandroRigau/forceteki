@@ -158,8 +158,9 @@ class DeckBuilder {
 
         inPlayCards = inPlayCards.concat(this.getInPlayCardsForArena(playerCards.groundArena));
         inPlayCards = inPlayCards.concat(this.getInPlayCardsForArena(playerCards.spaceArena));
-        inPlayCards = inPlayCards.concat(this.getUpgradesFromCard(playerCards.leader));
-        inPlayCards = inPlayCards.concat(this.getUpgradesFromCard(playerCards.base));
+        // token upgrades (experience, shield, etc.) are generated at setup time, not pulled from the deck (see getInPlayCardsForArena)
+        inPlayCards = inPlayCards.concat(this.getUpgradesFromCard(playerCards.leader).filter((upgrade) => !Util.isTokenUpgrade(upgrade)));
+        inPlayCards = inPlayCards.concat(this.getUpgradesFromCard(playerCards.base).filter((upgrade) => !Util.isTokenUpgrade(upgrade)));
 
         // Collect all the cards together
         deckCards = deckCards.concat(inPlayCards);
